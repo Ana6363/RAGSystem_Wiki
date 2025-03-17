@@ -1,0 +1,142 @@
+@startuml
+
+hide methods
+left to right direction
+skinparam ClassAttributeIconSize 0
+skinparam packageStyle rect
+
+package BankAccounts {
+    class BankAccount <<Entity Root>> {
+    }
+
+    class BankInstitution <<Entity>> {
+    }
+
+    class BankCommission <<Entity>> {
+    }
+
+    class Value <<Value Object>> {
+    }
+
+    class Name <<Value Object>> {
+    }
+
+    class AccountNumber <<Value Object>> {
+    }
+
+    class Balance <<Value Object>> {
+    }
+
+    class Currency <<Value Object>> {
+    }
+
+    class InstitutionName <<Value Object>> {
+    }
+
+    class Country <<Value Object>> {
+    }
+
+    class Description <<Value Object>> {
+    }
+
+    class IBAN <<Value Object>> {
+    }
+  
+}
+
+
+BankAccount "1" --> "1" BankCommission: has
+BankAccount "1" --> "1" BankInstitution: related to
+BankAccount "1" --> "1" BankCommission: has
+BankAccount "1" --> "1" AccountNumber: has
+BankAccount "1" --> "1" Balance: has
+BankAccount "1" --> "1" Currency: has
+BankAccount "1" --> "1" IBAN: has
+BankAccount "1" --> "1" Description: has
+
+BankInstitution "1" --> "1" InstitutionName: has
+BankInstitution "1" --> "1" Country: operates in
+
+BankCommission "1" --> "1" Value: has
+BankCommission "1" --> "1" Name: has
+
+package Transactions {
+    class Transaction <<Entity Root>> {
+    }
+
+    class Ammount <<Value Object>> {
+    }
+
+    class Date <<Value Object>> {
+    }
+
+    class TransactionDescription <<Value Object>> {
+    }
+
+    class TransactionCurrency <<Value Object>> {
+    }
+
+    class TransactionBalance <<Value Object>> {
+    }
+
+    class Type <<Value Object>> {
+    }
+}
+BankAccount "1" --> "0..*" Transaction: has
+Transaction "1" --> "1" Amount: has
+Transaction "1" --> "1" Date: has
+Transaction "1" --> "1" TransactionDescription: has
+Transaction "1" --> "1" TransactionCurrency: has
+Transaction "1" --> "1" TransactionBalance: has
+Transaction "1" --> "1" Type: has
+
+package Payments {
+    class Payment <<Entity Root>> {
+    }
+
+    class PaymentDescription <<Value Object>> {
+    }
+
+    class PaymentCurrency <<Value Object>> {
+    }
+
+    class PaymentAmount <<Value Object>> {
+    }
+
+    class LimitDate <<Value Object>> {
+    }
+    
+}
+
+Payment "1" --> "1" PaymentDescription: has
+Payment "1" --> "1" PaymentCurrency: has
+Payment "1" --> "1" PaymentAmount: has
+Payment "1" --> "1" LimitDate: has
+Payment "1" --> "1" Transaction: becomes
+
+package Clients {
+    class Client <<Entity Root>> {
+    }
+
+    class ClientName <<Value Object>> {
+    }
+
+    class ClientEmail <<Value Object>> {
+    }
+
+    class VATNumber <<Value Object>> {
+    }
+
+}
+
+Client "1" --> "1" ClientName: has
+Client "1" --> "1" ClientEmail: has
+Client "1" --> "1" VATNumber: has
+Client "1" --> "*" BankAccount: has
+Client "1" --> "0..*" Payment: performs
+
+
+
+
+
+@enduml
