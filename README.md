@@ -1,4 +1,7 @@
 # RAGSystem_Wiki
+## Level 1
+### Logical View
+<img src="Diagrams/Logical View Level - 1.png" width=100%>
 
 ## Level 2
 ### Logical View
