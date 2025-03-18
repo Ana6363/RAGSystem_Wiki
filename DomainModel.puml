@@ -64,7 +64,7 @@ package Transactions {
     class Transaction <<Entity Root>> {
     }
 
-    class Ammount <<Value Object>> {
+    class Amount <<Value Object>> {
     }
 
     class Date <<Value Object>> {
