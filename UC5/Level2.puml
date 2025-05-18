@@ -1,0 +1,33 @@
+@startuml
+
+title UC5: Remove a Chat Page
+
+
+autonumber
+
+participant "<<system(c4)>> \nnBanks_RAGSystem_SPA" as sys
+participant "<<container(c4)>> \nnBanks_RAGSystem_API" as api
+participant "<<container(c4)>> \nnBanks_RAGSystem_NoRelationDB" as db1
+actor "<<user(c4)>> \nUser" as user
+
+activate user
+user -> sys : Requests to remove a chat page
+activate sys
+sys --> user: Requests the user to confirm the removal
+deactivate sys
+user -> sys : Confirms the removal
+activate sys
+sys -> api: HTTP DELETE ("delete")
+activate api
+api -> api: Validates the request
+api -> db1: Remove the chat page
+activate db1
+db1 --> api: Confirms removal
+deactivate db1
+api --> sys: Code 200 (OK)
+deactivate api
+sys --> user: Notifies the user about the removal
+deactivate sys
+deactivate user
+
+@enduml

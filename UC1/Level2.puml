@@ -1,0 +1,44 @@
+@startuml
+
+title UC1: Add a File
+
+
+autonumber
+
+participant "<<container(c4)>> \nnBanks_RAGSystem_SPA" as sys
+participant "<<container(c4)>> \nnBanks_RAGSystem_API" as api
+participant "<<container(c4)>> \nnBanks_RAGSystem_AI" as ai
+participant "<<container(c4)>> \nnBanks_RAGSystem_NoRelationDB" as db1
+participant "<<container(c4)>> \nnBanks_RAGSystem_VectorDB" as db2
+actor "<<user(c4)>> \nUser" as user
+
+activate user
+user -> sys : Requests to add a file
+activate sys
+sys --> user: Requests the user to upload a file
+deactivate sys
+user -> sys : Uploads a file
+activate sys
+sys -> api: HTTP POST ("upload")
+activate api
+api -> api: Validates the file
+api -> db1: Store the file
+activate db1
+db1 --> api: Confirms storage
+deactivate db1
+api -> ai: Embed the file
+activate ai
+ai -> ai: Embeds the file
+ai -> db2: Store the embeddings
+activate db2
+db2 --> ai: Confirms storage
+deactivate db2
+ai --> api: Confirms embedding
+deactivate ai
+api --> sys: Code 200 (OK)
+deactivate api
+sys --> user: Notifies the user about the file validation
+deactivate sys
+deactivate user
+
+@enduml

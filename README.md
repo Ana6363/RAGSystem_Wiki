@@ -72,6 +72,7 @@
 | UC5: As a User, I want to remove a chat page. | The User can remove a chat page. |
 | UC6: As a User, I want to view the chat history. | The User can view the history of a chat page. |
 | UC7: As a User, I want to ask a question and get an answer according to the files. | The User can ask a question to the system and receive an answer built accordingly to the files he previously provided. |
+| UC8: : As a User, I want to receive a structured file. | The User can request and receive a structured file.|
 
 ---
 

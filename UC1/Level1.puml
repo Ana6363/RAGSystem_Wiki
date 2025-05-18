@@ -1,0 +1,23 @@
+@startuml
+
+title UC1: Add a File
+
+
+autonumber
+
+participant "<<system(c4)>> \nnBanks_RAGSystem" as sys
+actor "<<user(c4)>> \nUser" as user
+
+activate user
+user -> sys : Requests to add a file
+activate sys
+sys --> user: Requests the user to upload a file
+deactivate sys
+user -> sys : Uploads a file
+activate sys
+sys -> sys : Validates the file
+sys --> user: Notifies the user about the file validation
+deactivate sys
+deactivate user
+
+@enduml

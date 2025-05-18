@@ -1,0 +1,22 @@
+@startuml
+
+title UC5: Remove a Chat Page
+
+
+autonumber
+
+participant "<<system(c4)>> \nnBanks_RAGSystem" as sys
+actor "<<user(c4)>> \nUser" as user
+
+activate user
+user -> sys : Requests to remove a chat page
+activate sys
+sys --> user: Requests the user to confirm the removal
+deactivate sys
+user -> sys : Confirms the removal
+activate sys
+sys -> sys : Validates the request
+deactivate sys
+deactivate user
+
+@enduml
