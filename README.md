@@ -99,7 +99,7 @@
 ### Others (+)
 - Usage of OpenAI as an external LLM API  
 - Usage of MongoDB and Qdrant databases  
-- Logic interface made using TypeScript and React framework  
+- Logic interface made using TypeScript and Angular framework  
 - Business logic made using .NET (C#)  
 - Communication with an external API using Python and C#  
 
