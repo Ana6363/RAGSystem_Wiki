@@ -5,8 +5,8 @@ title UC1: Add a File
 
 autonumber
 
-participant "<<system(c4)>> \nnBanks_RAGSystem" as sys
 actor "<<user(c4)>> \nUser" as user
+participant "<<system(c4)>> \nnBanks_RAGSystem" as sys
 
 activate user
 user -> sys : Requests to add a file

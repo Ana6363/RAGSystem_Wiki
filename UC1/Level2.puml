@@ -5,12 +5,12 @@ title UC1: Add a File
 
 autonumber
 
+actor "<<user(c4)>> \nUser" as user
 participant "<<container(c4)>> \nnBanks_RAGSystem_SPA" as sys
 participant "<<container(c4)>> \nnBanks_RAGSystem_API" as api
 participant "<<container(c4)>> \nnBanks_RAGSystem_AI" as ai
 participant "<<container(c4)>> \nnBanks_RAGSystem_NoRelationDB" as db1
 participant "<<container(c4)>> \nnBanks_RAGSystem_VectorDB" as db2
-actor "<<user(c4)>> \nUser" as user
 
 activate user
 user -> sys : Requests to add a file
@@ -33,7 +33,7 @@ ai -> db2: Store the embeddings
 activate db2
 db2 --> ai: Confirms storage
 deactivate db2
-ai --> api: Confirms embedding
+ai --> api: Confirms embedding and storage
 deactivate ai
 api --> sys: Code 200 (OK)
 deactivate api
