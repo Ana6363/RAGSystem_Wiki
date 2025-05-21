@@ -5,8 +5,8 @@ title UC5: Remove a Chat Page
 
 autonumber
 
-participant "<<system(c4)>> \nnBanks_RAGSystem" as sys
 actor "<<user(c4)>> \nUser" as user
+participant "<<system(c4)>> \nnBanks_RAGSystem" as sys
 
 activate user
 user -> sys : Requests to remove a chat page

@@ -1,0 +1,50 @@
+@startuml
+
+title UC5: Remove a Chat Page
+
+
+autonumber
+
+actor "<<user(c4)>> \nUser" as user
+participant "<<container(c4)>> \nnBanks_RAGSystem_SPA" as sys
+participant "<<component(c4)>> \nController" as controller
+participant "<<component(c4)>> \nService" as service
+participant "<<component(c4)>> \nChatHistoryRepository" as repository
+participant "<<container(c4)>> \nnBanks_RAGSystem_NoRelationDB" as db1
+
+activate user
+user -> sys : Requests to remove a chat page
+activate sys
+sys --> user: Requests the user to confirm the removal
+deactivate sys
+user -> sys : Confirms the removal
+activate sys
+sys -> controller: HTTP DELETE ("delete")
+activate controller
+controller -> service: DeleteChatHistory(id)
+activate service
+service -> repository: GetChatHistoryByIdAsync(id)
+activate repository
+repository -> db1: GetChatHistoryById(id)
+activate db1
+db1 --> repository: ChatHistory
+deactivate db1
+repository --> service: ChatHistory
+deactivate repository
+service -> repository: DeleteChatHistoryAsync(chatHistory.id)
+activate repository
+repository -> db1: DeleteChatHistory(id)
+activate db1
+db1 --> repository: Confirms removal
+deactivate db1
+repository --> service: Confirmation
+deactivate repository
+service --> controller: Confirmation
+deactivate service
+controller --> sys: Code 200 (OK)
+deactivate controller
+sys --> user: Notifies the user about the removal
+deactivate sys
+deactivate user
+
+@enduml

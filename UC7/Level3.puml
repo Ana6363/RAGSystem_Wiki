@@ -1,0 +1,69 @@
+@startuml
+
+title UC7: Ask a Question and Get an Answer
+
+
+autonumber
+
+actor "<<user(c4)>> \nUser" as user
+participant "<<system(c4)>> \nnBanks_RAGSystem_SPA" as sys
+participant "<<component(c4)>> \nController" as controller
+participant "<<component(c4)>> \nService" as service
+participant "<<component(c4)>> \nChatHistoryRepository" as repository
+participant "<<container(c4)>> \nnBanks_RAGSystem_NoRelationDB" as db1
+participant "<<component(c4)>> \nChatMessage" as message
+participant "<<component(c4)>> \nRAGServerRepository" as RAGrepository
+participant "<<container(c4)>> \nnBanks_RAGSystem" as ai
+participant "<<container(c4)>> \nnBanks_RAGSystem_VectorDB" as db2
+participant "<<container(c4)>> \nExternal_LLM" as llm
+
+
+activate user
+user -> sys : Requests to ask a question
+activate sys
+sys --> user: Requests the user to provide a question
+deactivate sys
+user -> sys : Provides a question
+activate sys
+sys -> controller: HTTP POST ("ask")
+activate controller
+controller -> controller: Validates the question
+controller -> service: AskQuestionAsync(chatID,question)
+activate service
+service -> repository: GetChatHistoryByIdAsync(chatID)
+activate repository
+repository -> db1: GetChatHistoryById(chatID)
+activate db1
+db1 --> repository: ChatHistory
+deactivate db1
+repository --> service: ChatHistory
+deactivate repository
+service -> message: new ChatMessage(role, question, timestamp)
+activate message
+message --> service: ChatMessage
+deactivate message
+service -> RAGrepository: QueryAsync(chat.FileIds, question)
+activate RAGrepository
+RAGrepository -> ai: query(FileIds, question)
+activate ai
+ai -> db2: Retrieve relevant file chunks
+activate db2
+db2 --> ai: Relevant file chunks
+deactivate db2
+ai -> llm: Process question with relevant file chunks
+activate llm
+llm --> ai: Answer
+deactivate llm
+ai --> RAGrepository: Answer
+deactivate ai
+RAGrepository --> service: Answer
+deactivate RAGrepository
+service --> controller: Answer
+deactivate service
+controller --> sys: Code 200 (OK)
+deactivate controller
+sys --> user: Delivers the answer
+deactivate sys
+deactivate user
+
+@enduml

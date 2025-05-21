@@ -5,10 +5,10 @@ title UC5: Remove a Chat Page
 
 autonumber
 
+actor "<<user(c4)>> \nUser" as user
 participant "<<system(c4)>> \nnBanks_RAGSystem_SPA" as sys
 participant "<<container(c4)>> \nnBanks_RAGSystem_API" as api
 participant "<<container(c4)>> \nnBanks_RAGSystem_NoRelationDB" as db1
-actor "<<user(c4)>> \nUser" as user
 
 activate user
 user -> sys : Requests to remove a chat page

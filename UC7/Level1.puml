@@ -5,8 +5,8 @@ title UC7: Ask a Question and Get an Answer
 
 autonumber
 
-participant "<<system(c4)>> \nnBanks_RAGSystem" as sys
 actor "<<user(c4)>> \nUser" as user
+participant "<<system(c4)>> \nnBanks_RAGSystem" as sys
 
 activate user
 user -> sys : Asks a question

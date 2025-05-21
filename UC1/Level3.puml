@@ -1,0 +1,82 @@
+@startuml
+
+title UC1: Add a File
+
+
+autonumber
+
+actor "<<user(c4)>> \nUser" as user
+participant "<<container(c4)>> \nnBanks_RAGSystem_SPA" as sys
+participant "<<component(c4)>> \nController" as controller
+participant "<<component(c4)>> \nService" as service
+participant "<<component(c4)>> \nDocumentDTO" as dto
+participant "<<component(c4)>> \nDocumentMapper" as mapper
+participant "<<component(c4)>> \nDocument" as document
+participant "<<component(c4)>> \nDocumentRepository" as repository
+participant "<<container(c4)>> \nnBanks_RAGSystem" as RAG
+participant "<<container(c4)>> \nnBanks_RAGSystem_NoRelationDB" as db1
+participant "<<container(c4)>> \nnBanks_RAGSystem_VectorDB" as db2
+
+activate user
+user -> sys : Requests to add a file
+activate sys
+sys --> user: Requests the user to upload a file
+deactivate sys
+user -> sys : Uploads a file
+activate sys
+sys -> controller: HTTP POST ("upload")
+activate controller
+controller -> controller: Validates the file
+controller -> service: UploadAndProcessDocumentAsync(File, UserId)
+activate service
+service -> service: Validates the file
+service -> dto: new DocumentDTO(userId, fileName, rawContent, fileBytes)
+activate dto
+dto --> service: DocumentDTO
+deactivate dto
+service -> service: AddDocumentAsync(documentDto)
+service -> mapper: ToDomain(documentDto)
+activate mapper
+mapper -> document: new Document(userId, fileName, content)
+activate document
+document --> mapper: Document
+deactivate document
+mapper --> service: Document
+deactivate mapper
+service -> repository: AddDocumentAsync(document)
+activate repository
+repository -> db1: Store the file
+activate db1
+db1 --> repository: Confirms storage
+deactivate db1
+repository --> service: Confirmation
+deactivate repository
+service -> mapper: ToDto(document)
+activate mapper
+mapper -> dto: new DocumentDTO(userId, fileName, content, id, fileData)
+activate dto
+dto --> mapper: DocumentDTO
+deactivate dto
+mapper --> service: DocumentDTO
+deactivate mapper
+service --> controller: DocumentDTO
+deactivate service
+controller -> RAG: embed(fileId)
+activate RAG
+RAG -> db1: GetDocumentById(fileId)
+activate db1
+db1 --> RAG: Document
+deactivate db1
+RAG -> RAG: Embed the file
+RAG -> db2: Store the embeddings
+activate db2
+db2 --> RAG: Confirms storage
+deactivate db2
+RAG --> controller: Confirms embedding and storage
+deactivate RAG
+controller --> sys: Code 200 (OK)
+deactivate controller
+sys --> user: Notifies the user about the file validation
+deactivate sys
+deactivate user
+@enduml
