@@ -14,5 +14,6 @@ User --> (As a User, I want to delete a chat page)
 User --> (As a User, I want to create a new chat page)
 User --> (As a User, I want to ask a question and get an answer according to the files)
 User --> (As a User, I want to visualize a file)
+User --> (As a User, I want to receive a structured file)
 
 @enduml
