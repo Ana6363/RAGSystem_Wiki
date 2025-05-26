@@ -15,7 +15,7 @@ participant "<<component(c4)>> \nChatMessage" as message
 participant "<<component(c4)>> \nRAGServerRepository" as RAGrepository
 participant "<<container(c4)>> \nnBanks_RAGSystem" as ai
 participant "<<container(c4)>> \nnBanks_RAGSystem_VectorDB" as db2
-participant "<<container(c4)>> \nExternal_LLM" as llm
+participant "<<container(c4)>> \nLLM_API" as llm
 
 
 activate user

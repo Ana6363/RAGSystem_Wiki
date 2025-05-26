@@ -10,6 +10,8 @@ participant "<<system(c4)>> \nnBanks_RAGSystem_SPA" as sys
 participant "<<container(c4)>> \nnBanks_RAGSystem_API" as api
 participant "<<container(c4)>> \nnBanks_RAGSystem_AI" as ai
 participant "<<container(c4)>> \nnBanks_RAGSystem_VectorDB" as db2
+participant "<<container(c4)>> \nLLM_API" as llm
+
 
 activate user
 user -> sys : Requests to ask a question
@@ -27,8 +29,12 @@ ai -> db2: Retrieve relevant file chunks
 activate db2
 db2 --> ai: Returns the relevant file chunks
 deactivate db2
-ai -> ai: Process the question with the retrieved file chunks
-ai -> ai: Generates an answer
+ai -> llm: Sends the question and file chunks
+activate llm
+llm -> llm: Process the question and file chunks
+llm -> llm: Generates an answer
+llm --> ai: Returns the answer
+deactivate llm
 ai --> api: Returns the answer
 deactivate ai
 api --> sys: Code 200 (OK)
