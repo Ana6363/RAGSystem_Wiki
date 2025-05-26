@@ -11,6 +11,7 @@ participant "<<system(c4)>> \nnBanks_RAGSystem" as sys
 activate user
 user -> sys : Asks a question
 activate sys
+sys -> sys : Validates the question
 sys --> user: Provides an answer
 deactivate sys
 deactivate user
