@@ -16,6 +16,7 @@ deactivate sys
 user -> sys : Confirms the removal
 activate sys
 sys -> sys : Validates the request
+sys --> user: Notifies the user of successful removal
 deactivate sys
 deactivate user
 
